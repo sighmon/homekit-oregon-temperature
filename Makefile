@@ -7,7 +7,7 @@ export GO111MODULE=on
 
 build:
 	$(GOGET)
-	$(GOBUILD) homekit-enviroplus.go
+	$(GOBUILD) homekit-oregon-scientific-idtw211r.go
 
 run:
-	$(GORUN) homekit-enviroplus.go
+	$(GORUN) homekit-oregon-scientific-idtw211r.go

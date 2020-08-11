@@ -57,4 +57,6 @@ If you uninstall this accessory from your Apple Home, you'll also need to delete
 
 ## Thanks
 
+Based on: https://github.com/sighmon/homekit-enviroplus
+
 This project uses the amazing work of [Matthias](https://github.com/brutella). Please consider donating if you found this useful.
