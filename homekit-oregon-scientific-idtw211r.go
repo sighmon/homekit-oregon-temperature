@@ -3,6 +3,8 @@ package main
 import (
 	"github.com/brutella/hc"
 	"github.com/brutella/hc/accessory"
+	"github.com/brutella/hc/characteristic"
+	"github.com/brutella/hc/service"
 
 	"bufio"
 	"flag"
@@ -43,6 +45,11 @@ func main() {
 			ID:               1,
 		},
 	)
+
+	battery := service.NewBatteryService()
+	batteryLevel := characteristic.NewBatteryLevel()
+	battery.Service.AddCharacteristic(batteryLevel.Characteristic)
+	bridge.AddService(battery.Service)
 
 	indoor := accessory.NewTemperatureSensor(
 		accessory.Info{
@@ -101,6 +108,7 @@ func main() {
 			// Get readings from the Prometheus exporter
 			indoorReading := 0.0
 			outdoorReading := 0.0
+			batteryPercentage := 0.0
 			resp, err := http.Get(fmt.Sprintf("%s:%d", sensorHost, sensorPort))
 			if err == nil {
 				defer resp.Body.Close()
@@ -117,8 +125,10 @@ func main() {
 							if err == nil {
 								if reading == "temperature_indoors" {
 									indoorReading = parsedValue
-								} else {
+								} else if reading == "temperature_outdoors"{
 									outdoorReading = parsedValue
+								} else if reading == "battery_percentage" {
+									batteryPercentage = parsedValue
 								}
 							}
 						}
@@ -137,7 +147,8 @@ func main() {
 			// Set the temperature reading on the accessory
 			indoor.TempSensor.CurrentTemperature.SetValue(indoorReading)
 			outdoor.TempSensor.CurrentTemperature.SetValue(outdoorReading)
-			log.Println(fmt.Sprintf("Indoors: %f°C, outdoors: %f°C", indoorReading, outdoorReading))
+			batteryLevel.SetValue(int(batteryPercentage))
+			log.Println(fmt.Sprintf("Indoors: %f°C, outdoors: %f°C, battery: %f%", indoorReading, outdoorReading, batteryPercentage))
 
 			// Time between readings
 			time.Sleep(secondsBetweenReadings)
