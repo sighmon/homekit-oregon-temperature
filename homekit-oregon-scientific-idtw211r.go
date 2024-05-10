@@ -149,7 +149,7 @@ func main() {
 			indoor.TempSensor.CurrentTemperature.SetValue(indoorReading)
 			outdoor.TempSensor.CurrentTemperature.SetValue(outdoorReading)
 			batteryLevel.SetValue(int(batteryPercentage))
-			log.Println(fmt.Sprintf("Indoors: %f°C, outdoors: %f°C, battery: %f%", indoorReading, outdoorReading, batteryPercentage))
+			log.Println(fmt.Sprintf("Indoors: %f°C, outdoors: %f°C, battery: %f%%", indoorReading, outdoorReading, batteryPercentage))
 
 			// Time between readings
 			time.Sleep(secondsBetweenReadings)
