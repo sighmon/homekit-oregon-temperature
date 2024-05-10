@@ -150,7 +150,7 @@ func main() {
 			indoor.TempSensor.CurrentTemperature.SetValue(indoorReading)
 			outdoor.TempSensor.CurrentTemperature.SetValue(outdoorReading)
 			batteryPercentageRounded := int(math.RoundToEven(float64(batteryPercentage)))
-			batteryLevel.SetValue(batteryPercentageRounded)
+			battery.BatteryLevel.SetValue(batteryPercentageRounded)
 			log.Println(fmt.Sprintf("Indoors: %f°C, outdoors: %f°C, battery: %f%%", indoorReading, outdoorReading, batteryPercentageRounded))
 
 			// Time between readings
