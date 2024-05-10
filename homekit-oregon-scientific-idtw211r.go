@@ -149,8 +149,8 @@ func main() {
 			// Set the temperature reading on the accessory
 			indoor.TempSensor.CurrentTemperature.SetValue(indoorReading)
 			outdoor.TempSensor.CurrentTemperature.SetValue(outdoorReading)
-			batteryPercentageRounded := int(math.RoundToEven(float64(batteryPercentage)))
-			battery.BatteryLevel.SetValue(batteryPercentageRounded)
+			batteryPercentageRounded := math.RoundToEven(float64(batteryPercentage))
+			battery.BatteryLevel.SetValue(int(batteryPercentageRounded))
 			log.Println(fmt.Sprintf("Indoors: %f°C, outdoors: %f°C, battery: %f%%", indoorReading, outdoorReading, batteryPercentageRounded))
 
 			// Time between readings
