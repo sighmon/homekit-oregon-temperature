@@ -103,6 +103,7 @@ func main() {
 		readings := []string{
 			"temperature_indoors",
 			"temperature_outdoors",
+			"battery_percentage",
 		}
 		for {
 			// Get readings from the Prometheus exporter
