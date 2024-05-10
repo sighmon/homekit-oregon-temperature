@@ -10,6 +10,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"math"
 	"math/rand"
 	"net/http"
 	"regexp"
@@ -148,8 +149,9 @@ func main() {
 			// Set the temperature reading on the accessory
 			indoor.TempSensor.CurrentTemperature.SetValue(indoorReading)
 			outdoor.TempSensor.CurrentTemperature.SetValue(outdoorReading)
-			batteryLevel.SetValue(int(batteryPercentage))
-			log.Println(fmt.Sprintf("Indoors: %f°C, outdoors: %f°C, battery: %f%%", indoorReading, outdoorReading, batteryPercentage))
+			batteryPercentageRounded := int(math.RoundToEven(float64(batteryPercentage)))
+			batteryLevel.SetValue(batteryPercentageRounded)
+			log.Println(fmt.Sprintf("Indoors: %f°C, outdoors: %f°C, battery: %f%%", indoorReading, outdoorReading, batteryPercentageRounded))
 
 			// Time between readings
 			time.Sleep(secondsBetweenReadings)
