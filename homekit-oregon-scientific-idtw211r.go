@@ -46,11 +46,6 @@ func main() {
 		},
 	)
 
-	battery := service.NewBatteryService()
-	batteryLevel := characteristic.NewBatteryLevel()
-	battery.Service.AddCharacteristic(batteryLevel.Characteristic)
-	bridge.AddService(battery.Service)
-
 	indoor := accessory.NewTemperatureSensor(
 		accessory.Info{
 			Name:             "Indoor",
@@ -65,6 +60,11 @@ func main() {
 		50.0, // Max sensor value
 		0.1,  // Step value
 	)
+
+	battery := service.NewBatteryService()
+	batteryLevel := characteristic.NewBatteryLevel()
+	battery.Service.AddCharacteristic(batteryLevel.Characteristic)
+	indoor.AddService(battery.Service)
 
 	outdoor := accessory.NewTemperatureSensor(
 		accessory.Info{
